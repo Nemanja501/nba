@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::resource('/teams', 'App\Http\Controllers\TeamController');
 Route::resource('/players', 'App\Http\Controllers\PlayerController');
 Route::resource('/auth', 'App\Http\Controllers\AuthController');
+Route::resource('/news', 'App\Http\Controllers\NewsController');
 
 Route::middleware('authenticated')->group(function(){
     Route::get('/logout', [AuthController::class, 'destroy']);
