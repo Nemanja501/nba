@@ -10,5 +10,8 @@
         @foreach ($team->players as $player)
             <a style="text-decoration: none" href="/players/{{ $player->id }}"><li class="list-group-item">{{ $player->first_name }} {{ $player->last_name }}</li></a>
         @endforeach
-      </ul>
+    </ul>
+    <br>
+    <h3>Comments:</h3>
+    @include('components.comments')
 @endsection
