@@ -12,6 +12,9 @@
         @endforeach
     </ul>
     <br>
+    @include('components.createcomment')
+    @include('components.errors')
+    @include('components.status')
     <h3>Comments:</h3>
     @include('components.comments')
 @endsection

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,7 @@ Route::resource('/auth', 'App\Http\Controllers\AuthController');
 
 Route::middleware('authenticated')->group(function(){
     Route::get('/logout', [AuthController::class, 'destroy']);
+    Route::post('/createcomment', [CommentController::class, 'store']);
 });
 
 Route::middleware('notauthenticated')->group(function(){

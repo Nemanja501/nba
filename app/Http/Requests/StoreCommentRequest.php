@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreCommentRequest extends FormRequest
 {
@@ -11,6 +12,7 @@ class StoreCommentRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        if(Auth::check()) return true;
         return false;
     }
 
@@ -22,7 +24,9 @@ class StoreCommentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'content' => 'required|min:10',
+            'user_id' => 'required|exists:users,id',
+            'team_id' => 'required|exists:teams,id'
         ];
     }
 }

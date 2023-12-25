@@ -8,6 +8,11 @@ use App\Models\Comment;
 
 class CommentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('profanity')->only('store');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -29,7 +34,9 @@ class CommentController extends Controller
      */
     public function store(StoreCommentRequest $request)
     {
-        //
+        $comment = Comment::create($request->all());
+        $teamName = $comment->team->name;
+        return redirect("/teams/$teamName")->with('status', 'Comment added successfully!');
     }
 
     /**
