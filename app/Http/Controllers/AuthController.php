@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Mail\VerifyMail;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
@@ -25,6 +28,13 @@ class AuthController extends Controller
             return redirect('/login')->withErrors('Invalid credentials!');
         }
 
+        if(Auth::user()->email_verified_at == NULL){
+            Session::flush();
+            Auth::logout();
+
+            return redirect('/login')->withErrors('Email not verified!');
+        }
+
         return redirect('/teams')->with('status', 'Logged in!');
     }
 
@@ -34,6 +44,14 @@ class AuthController extends Controller
 
     public function showLogin(){
         return view('pages.login');
+    }
+
+    public function verifyEmail(string $id){
+        $user = User::find($id);
+        $user->email_verified_at = Carbon::now()->toDateTimeString();
+        $user->save();
+
+        return redirect('/login')->with('status', 'Email verified!');
     }
 
     /**
@@ -46,6 +64,7 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
+        Mail::to($user->email)->send(new VerifyMail($user->id));
 
         return redirect('/login')->with('status', 'Successfully created account!');
     }

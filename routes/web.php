@@ -28,4 +28,5 @@ Route::middleware('authenticated')->group(function(){
 Route::middleware('notauthenticated')->group(function(){
     Route::get('/register', [AuthController::class, 'showRegister']);
     Route::get('/login', [AuthController::class, 'showLogin']);
+    Route::get('/email/verify/{id}', [AuthController::class, 'verifyEmail']);
 });

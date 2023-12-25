@@ -14,6 +14,7 @@
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
+  <br>
   @include('components.errors')
   @include('components.status')
 @endsection
