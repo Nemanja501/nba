@@ -2,6 +2,7 @@
 
 @section('content')
 @include('components.status')
+@include('components.sidebar')
 @foreach ($news as $singleNews)
 <div class="card" style="width: 18rem;">
     <div class="card-body">

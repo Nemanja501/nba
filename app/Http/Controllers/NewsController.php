@@ -21,12 +21,14 @@ class NewsController extends Controller
     public function index()
     {
         $news = News::latest()->paginate(4);
-        return view('pages.news', compact('news'));
+        $teams = Team::has('news')->get();
+        return view('pages.news', compact('news', 'teams'));
     }
 
     public function showNewsForTeam(string $teamName){
         $news = Team::where('name', $teamName)->first()->news()->paginate(4);
-        return view('pages.news', compact('news'));
+        $teams = Team::has('news')->get();
+        return view('pages.news', compact('news', 'teams'));
     }
 
     /**
