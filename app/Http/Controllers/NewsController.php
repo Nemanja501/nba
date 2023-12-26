@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SearchRequest;
 use App\Http\Requests\StoreNewsRequest;
 use App\Http\Requests\UpdateNewsRequest;
 use App\Models\News;
 use App\Models\Team;
+use GuzzleHttp\Psr7\Request;
 use PhpParser\Node\Expr\New_;
 
 class NewsController extends Controller
@@ -27,6 +29,12 @@ class NewsController extends Controller
 
     public function showNewsForTeam(string $teamName){
         $news = Team::where('name', $teamName)->first()->news()->paginate(4);
+        $teams = Team::has('news')->get();
+        return view('pages.news', compact('news', 'teams'));
+    }
+
+    public function search(SearchRequest $request){
+        $news = News::where('title', 'LIKE', '%' . $request->search . '%')->orWhere('content', 'LIKE', '%' . $request->search . '%')->paginate(3);
         $teams = Team::has('news')->get();
         return view('pages.news', compact('news', 'teams'));
     }

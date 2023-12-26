@@ -24,6 +24,7 @@ Route::resource('/players', 'App\Http\Controllers\PlayerController');
 Route::resource('/auth', 'App\Http\Controllers\AuthController');
 Route::resource('/news', 'App\Http\Controllers\NewsController');
 Route::get('/teams/news/{teamName}', [NewsController::class, 'showNewsForTeam']);
+Route::post('/search', [NewsController::class, 'search']);
 
 Route::middleware('authenticated')->group(function(){
     Route::get('/logout', [AuthController::class, 'destroy']);
