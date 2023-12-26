@@ -1,6 +1,7 @@
 @extends('layout.default')
 
 @section('content')
+@include('components.status')
 @foreach ($news as $singleNews)
 <div class="card" style="width: 18rem;">
     <div class="card-body">

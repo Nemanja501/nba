@@ -6,15 +6,21 @@ use App\Http\Requests\StoreNewsRequest;
 use App\Http\Requests\UpdateNewsRequest;
 use App\Models\News;
 use App\Models\Team;
+use PhpParser\Node\Expr\New_;
 
 class NewsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('authenticated')->only('create', 'store');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $news = News::paginate(3);
+        $news = News::latest()->paginate(4);
         return view('pages.news', compact('news'));
     }
 
@@ -28,7 +34,8 @@ class NewsController extends Controller
      */
     public function create()
     {
-        //
+        $teams = Team::all();
+        return view('pages.createnews', compact('teams'));
     }
 
     /**
@@ -36,7 +43,14 @@ class NewsController extends Controller
      */
     public function store(StoreNewsRequest $request)
     {
-        //
+        $news = News::create([
+            'title' => $request->title,
+            'content' => $request->content,
+            'user_id' => $request->user_id
+        ]);
+        $news->teams()->attach($request->teams);
+
+        return redirect('/news')->with('status', 'Thank you for publishing article on www.nba.com');
     }
 
     /**

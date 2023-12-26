@@ -14,6 +14,9 @@
     </li>
     @else
     <li class="nav-item">
+      <a class="nav-link" href="/news/create">Create news</a>
+    </li>
+    <li class="nav-item">
       <a class="nav-link" href="/logout">Logout</a>
     </li>
     @endif
