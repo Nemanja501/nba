@@ -11,6 +11,7 @@
             <a style="text-decoration: none" href="/players/{{ $player->id }}"><li class="list-group-item">{{ $player->first_name }} {{ $player->last_name }}</li></a>
         @endforeach
     </ul>
+    <a href="/teams/news/{{ $team->name }}">Show related news</a>
     <br>
     @if (auth()->check())
         @include('components.createcomment')
